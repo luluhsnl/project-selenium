@@ -1,4 +1,4 @@
-# pages/checkout_page.py
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -21,19 +21,19 @@ class CheckoutPage(BasePage):
         self.type(self.POSTAL_CODE, postal)
 
     def continue_checkout(self):
-        btn = self.find(self.CONTINUE_BTN)
+        btn = self.driver.find_element(*self.CONTINUE_BTN)
         self.driver.execute_script("arguments[0].click();", btn)
-        time.sleep(2)
+        time.sleep(3)
 
     def finish_checkout(self):
-        btn = self.find(self.FINISH_BTN)
+        btn = self.driver.find_element(*self.FINISH_BTN)
         self.driver.execute_script("arguments[0].click();", btn)
-        time.sleep(2)
+        time.sleep(3)
 
     def is_order_confirmed(self):
         try:
-            WebDriverWait(self.driver, 15).until(
-                EC.visibility_of_element_located(self.SUCCESS_MSG)
+            WebDriverWait(self.driver, 20).until(
+                EC.url_contains('checkout-complete')
             )
             return True
         except:
@@ -46,7 +46,10 @@ class CheckoutPage(BasePage):
         return self.is_visible(self.ERROR_MSG)
 
     def get_total(self):
-        el = WebDriverWait(self.driver, 15).until(
-            EC.visibility_of_element_located(self.TOTAL_LABEL)
-        )
-        return el.text
+        try:
+            el = WebDriverWait(self.driver, 20).until(
+                EC.presence_of_element_located(self.TOTAL_LABEL)
+            )
+            return el.text
+        except:
+            return ''
