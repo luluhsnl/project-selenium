@@ -6,7 +6,7 @@ from pages.base_page import BasePage
 class InventoryPage(BasePage):
     URL = 'https://www.saucedemo.com/inventory.html'
 
-    # ── Locators ──────────────────────────────────────
+    #  Locators 
     SORT_DROPDOWN    = (By.CLASS_NAME, 'product_sort_container')
     PRODUCT_NAMES    = (By.CLASS_NAME, 'inventory_item_name')
     PRODUCT_PRICES   = (By.CLASS_NAME, 'inventory_item_price')
@@ -17,7 +17,7 @@ class InventoryPage(BasePage):
     BURGER_MENU      = (By.ID, 'react-burger-menu-btn')
     LOGOUT_LINK      = (By.ID, 'logout_sidebar_link')
 
-    # ── Actions ───────────────────────────────────────
+    #  Actions 
     def sort_by(self, option):
         """option: 'az', 'za', 'lohi', 'hilo'"""
         Select(self.find(self.SORT_DROPDOWN)).select_by_value(option)
@@ -37,7 +37,7 @@ class InventoryPage(BasePage):
         self.click(self.BURGER_MENU)
         self.click(self.LOGOUT_LINK)
 
-    # ── Assertion Helpers ─────────────────────────────
+    #  Assertion Helpers 
     def get_product_count(self):
         return len(self.driver.find_elements(*self.PRODUCT_NAMES))
 

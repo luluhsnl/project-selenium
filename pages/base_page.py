@@ -1,4 +1,3 @@
-# pages/base_page.py
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -12,7 +11,7 @@ class BasePage:
         self.wait = WebDriverWait(driver, self.TIMEOUT)
         self.logger = logging.getLogger(self.__class__.__name__)
 
-    # ── Navigasi ──────────────────────────────────────
+    # Navigasi 
     def open(self, url):
         self.logger.info(f'Membuka URL: {url}')
         self.driver.get(url)
@@ -23,7 +22,7 @@ class BasePage:
     def get_current_url(self):
         return self.driver.current_url
 
-    # ── Elemen ────────────────────────────────────────
+    # Elemen 
     def find(self, locator):
         return self.wait.until(EC.presence_of_element_located(locator))
 

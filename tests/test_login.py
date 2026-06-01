@@ -1,4 +1,3 @@
-# tests/test_login.py
 import pytest
 from pages.dashboard_page import DashboardPage
 
@@ -21,15 +20,15 @@ class TestLogin:
         assert 'invalid' in msg.lower(), f'Pesan error tidak sesuai: {msg}'
 
     def test_logout_after_login(self, login_page, driver):
-        # Step 1: Login dulu
+        # 1: Login dulu
         login_page.login('tomsmith', 'SuperSecretPassword!')
         assert login_page.is_login_successful(), 'Login harus berhasil dulu'
 
-        # Step 2: Pastiin ada di dashboard
+        # 2: Pastiin ada di dashboard
         dashboard = DashboardPage(driver)
         assert dashboard.is_on_dashboard(), 'Harus ada di dashboard sebelum logout'
 
-        # Step 3: Logout dan verifikasi kembali ke halaman login
+        # 3: Logout dan verifikasi kembali ke halaman login
         dashboard.logout()
         assert 'login' in login_page.get_current_url(), \
             'Setelah logout harus redirect ke halaman login'

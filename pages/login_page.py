@@ -1,11 +1,11 @@
-# pages/login_page.py
+
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
 class LoginPage(BasePage):
     URL = 'https://the-internet.herokuapp.com/login'
 
-    # ── Locators ──────────────────────────────────────
+    #  Locators 
     USERNAME  = (By.ID, 'username')
     PASSWORD  = (By.ID, 'password')
     LOGIN_BTN = (By.CSS_SELECTOR, 'button[type=submit]')
@@ -13,7 +13,7 @@ class LoginPage(BasePage):
     FLASH_OK  = (By.CSS_SELECTOR, '.flash.success')
     FLASH_ERR = (By.CSS_SELECTOR, '.flash.error')
 
-    # ── Actions ───────────────────────────────────────
+    # Actions 
     def navigate(self):
         self.open(self.URL)
 
@@ -33,7 +33,7 @@ class LoginPage(BasePage):
         self.enter_password(password)
         self.click_login()
 
-    # ── Assertion Helpers ─────────────────────────────
+    # Assertion Helpers 
     def get_flash_message(self):
         return self.get_text(self.FLASH_MSG)
 
