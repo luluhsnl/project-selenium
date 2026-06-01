@@ -1,9 +1,8 @@
-
+# pages/checkout_page.py
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
-import time
 
 class CheckoutPage(BasePage):
     FIRST_NAME   = (By.ID, 'first-name')
@@ -21,18 +20,24 @@ class CheckoutPage(BasePage):
         self.type(self.POSTAL_CODE, postal)
 
     def continue_checkout(self):
-        btn = self.driver.find_element(*self.CONTINUE_BTN)
+        btn = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(self.CONTINUE_BTN)
+        )
         self.driver.execute_script("arguments[0].click();", btn)
-        time.sleep(3)
+        # Tunggu sampai finish button muncul (artinya sudah di step 2)
+        WebDriverWait(self.driver, 30).until(
+            EC.presence_of_element_located(self.FINISH_BTN)
+        )
 
     def finish_checkout(self):
-        btn = self.driver.find_element(*self.FINISH_BTN)
+        btn = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(self.FINISH_BTN)
+        )
         self.driver.execute_script("arguments[0].click();", btn)
-        time.sleep(3)
 
     def is_order_confirmed(self):
         try:
-            WebDriverWait(self.driver, 20).until(
+            WebDriverWait(self.driver, 30).until(
                 EC.url_contains('checkout-complete')
             )
             return True
