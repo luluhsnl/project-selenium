@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
+import time
 
 class CheckoutPage(BasePage):
     FIRST_NAME   = (By.ID, 'first-name')
@@ -20,22 +21,20 @@ class CheckoutPage(BasePage):
         self.type(self.POSTAL_CODE, postal)
 
     def continue_checkout(self):
-        wait = WebDriverWait(self.driver, 30)
-        btn = wait.until(EC.presence_of_element_located(self.CONTINUE_BTN))
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", btn)
+        btn = self.find(self.CONTINUE_BTN)
         self.driver.execute_script("arguments[0].click();", btn)
-        wait.until(EC.url_contains('checkout-step-two'))
+        time.sleep(2)
 
     def finish_checkout(self):
-        wait = WebDriverWait(self.driver, 30)
-        btn = wait.until(EC.presence_of_element_located(self.FINISH_BTN))
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", btn)
+        btn = self.find(self.FINISH_BTN)
         self.driver.execute_script("arguments[0].click();", btn)
+        time.sleep(2)
 
     def is_order_confirmed(self):
-        wait = WebDriverWait(self.driver, 30)
         try:
-            wait.until(EC.visibility_of_element_located(self.SUCCESS_MSG))
+            WebDriverWait(self.driver, 15).until(
+                EC.visibility_of_element_located(self.SUCCESS_MSG)
+            )
             return True
         except:
             return False
@@ -47,6 +46,7 @@ class CheckoutPage(BasePage):
         return self.is_visible(self.ERROR_MSG)
 
     def get_total(self):
-        wait = WebDriverWait(self.driver, 30)
-        el = wait.until(EC.visibility_of_element_located(self.TOTAL_LABEL))
+        el = WebDriverWait(self.driver, 15).until(
+            EC.visibility_of_element_located(self.TOTAL_LABEL)
+        )
         return el.text
