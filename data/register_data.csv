@@ -1,7 +1,7 @@
 firstname,lastname,username,password,expected,description
-Baba,Imup,Babaimup,Test@1234,PASS,Registrasi valid semua field benar
+Baba,Imup,TestUser2026A,Test@1234,PASS,Registrasi valid semua field benar
 Baba,Imup,Baba imup,Test@1234,FAIL,Username tidak valid ada spasi
-Baba,Imup,Babaimup,Test@123,PASS,Password tepat batas minimum 8 karakter
+Baba,Imup,TestUser2026B,Test@123,PASS,Password tepat batas minimum 8 karakter
 Baba,Imup,Babaimup,Test@12,FAIL,Password 1 karakter di bawah minimum 7 karakter
 Baba,Imup,Babaimup,,FAIL,Semua field kosong password kosong
 ,Imup,Babaimup,Test@1234,FAIL,First Name kosong
