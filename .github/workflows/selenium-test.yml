@@ -22,6 +22,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
+          google-chrome --version
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -29,6 +30,7 @@ jobs:
       - name: Run Selenium Tests (Headless)
         env:
           PYTHONPATH: /home/runner/work/project-selenium/project-selenium
+          CI: true
         run: |
           pytest tests/ --alluredir=reports/allure-results -v --import-mode=importlib
 
