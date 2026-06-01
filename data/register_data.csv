@@ -1,0 +1,9 @@
+username,password,expected,description
+validuser,Test@1234,PASS,Registrasi valid
+,Test@1234,FAIL,Username kosong
+validuser,,FAIL,Password kosong
+validuser,123,FAIL,Password terlalu pendek
+invalidemail,Test@1234,FAIL,Email tidak valid
+validuser,Test@1234,FAIL,Username sudah dipakai
+validuser,testpassword,FAIL,Password tanpa karakter spesial
+validuser,Test@1234567890123456789012345678901234567890,FAIL,Password terlalu panjang
