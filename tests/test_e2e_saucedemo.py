@@ -99,7 +99,7 @@ class TestSauceDemo:
         CartPage(driver).click_checkout()
         checkout = CheckoutPage(driver)
         checkout.fill_info('', 'Santoso', '40123')
-        checkout.continue_checkout()
+        checkout.continue_checkout_expect_error()  # <-- diubah
         assert checkout.has_error()
 
     @allure.title('TC-EC-010: Verifikasi total harga')
