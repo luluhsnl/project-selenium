@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
+import time
 
 class CheckoutPage(BasePage):
     FIRST_NAME   = (By.ID, 'first-name')
@@ -21,23 +22,23 @@ class CheckoutPage(BasePage):
 
     def continue_checkout(self):
         btn = WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable(self.CONTINUE_BTN)
+            EC.presence_of_element_located(self.CONTINUE_BTN)
         )
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(1)
         self.driver.execute_script("arguments[0].click();", btn)
-        # Tunggu sampai finish button muncul (artinya sudah di step 2)
-        WebDriverWait(self.driver, 30).until(
-            EC.presence_of_element_located(self.FINISH_BTN)
-        )
+        time.sleep(3)
 
     def finish_checkout(self):
         btn = WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable(self.FINISH_BTN)
+            EC.presence_of_element_located(self.FINISH_BTN)
         )
         self.driver.execute_script("arguments[0].click();", btn)
+        time.sleep(3)
 
     def is_order_confirmed(self):
         try:
-            WebDriverWait(self.driver, 30).until(
+            WebDriverWait(self.driver, 20).until(
                 EC.url_contains('checkout-complete')
             )
             return True
@@ -48,7 +49,13 @@ class CheckoutPage(BasePage):
         return self.get_text(self.ERROR_MSG)
 
     def has_error(self):
-        return self.is_visible(self.ERROR_MSG)
+        try:
+            WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located(self.ERROR_MSG)
+            )
+            return True
+        except:
+            return False
 
     def get_total(self):
         try:
