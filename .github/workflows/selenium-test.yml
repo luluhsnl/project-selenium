@@ -27,8 +27,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run Selenium Tests (Headless)
-        run: |
-          pytest tests/ --alluredir=reports/allure-results -v
+        run: pytest tests/ --alluredir=reports/allure-results -v --import-mode=importlib
 
       - name: Upload Allure Report
         if: always()
