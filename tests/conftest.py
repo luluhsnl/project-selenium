@@ -1,4 +1,3 @@
-# tests/conftest.py
 import pytest
 import os
 from selenium import webdriver
@@ -20,16 +19,14 @@ def driver():
         service=Service(EdgeChromiumDriverManager().install()),
         options=options
     )
-    yield d  # <-- test berjalan di sini
-    input('Tekan Enter untuk tutup browser...')  # <-- tambah ini
-    d.quit()  # <-- teardown otomatis setelah test
+    yield d   
+    d.quit()  
 
 @pytest.fixture(scope='function')
 def login_page(driver):
     from pages.login_page import LoginPage
     return LoginPage(driver)
 
-# ── Screenshot otomatis saat test FAIL ────────────────
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
